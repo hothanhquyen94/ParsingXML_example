@@ -1,8 +1,11 @@
 package com.example.unitec.parsingxml_example;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -19,7 +22,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity  {
     ListView listView;
     InputStream inputStream ;
     List<BaiViet> dsBaiViet;
@@ -38,6 +41,14 @@ public class MainActivity extends AppCompatActivity {
         AdapterTinTuc adapterTinTuc = new AdapterTinTuc(this,R.layout.custom_layout,dsBaiViet);
         listView.setAdapter(adapterTinTuc);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(MainActivity.this,ReedWeb.class);
+                intent.putExtra("link",dsBaiViet.get(i).getLink());
+                startActivity(intent);
+            }
+        });
     }
 
     private void LayDuLieuXML(){
